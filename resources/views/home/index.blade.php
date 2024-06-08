@@ -2,20 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+
+    @include('home.css')
 </head>
 
 <body>
-    <x-app-layout>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    @include('home.header')
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Main Banner Area Start ***** -->
+    @include('home.main_banner')
+    <!-- ***** Main Banner Area End ***** -->
+
+    {{-- Category --}}
+    @include('home.category')
 
 
-    </x-app-layout>
+    {{-- Book --}}
+
+    @include('home.book')
+
+    {{-- Footer --}}
+    @include('home.footer')
+    @include('home.script')
 
 
-    <h1> user page after login</h1>
 
 </body>
 
