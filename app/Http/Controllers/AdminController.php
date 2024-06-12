@@ -29,4 +29,9 @@ class AdminController extends Controller
             }
       
     }
+
+    public function category_page() {
+        return view('admin.category');
+
+    }
 }
