@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -33,5 +34,14 @@ class AdminController extends Controller
     public function category_page() {
         return view('admin.category');
 
+    }
+    public function add_category(Request $request) {
+        // $data = $request->all();
+        $data = new Category();
+        $data->cat_title = $request->category;
+        $data->save();
+        
+       
+        return redirect()->back();
     }
 }

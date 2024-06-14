@@ -197,18 +197,26 @@
                                 class="mr-2"><span>French </span></a></div>
                 </div>
                 <!-- Log out               -->
-                <div class="list-inline-item logout"> <a id="logout">
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                            @csrf
+                <!-- Log out -->
+                <div class="list-inline-item logout">
 
-                            <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                                {{ __('Log Out') }}
-                            </x-responsive-nav-link>
-                        </form>
+                    <x-app-layout>
+
+                    </x-app-layout>
+                    {{-- <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+
+                        <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form> --}}
 
                 </div>
+
+
+
             </div>
+        </div>
         </div>
     </nav>
 </header>
