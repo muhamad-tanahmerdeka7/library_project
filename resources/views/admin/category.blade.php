@@ -33,6 +33,15 @@
 
                 <div class ="container-fluid">
                     <div class="div_center">
+                        <div>
+                            @if (session()->has('message'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('message') }}
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">x</button>
+                                </div>
+                            @endif
+                        </div>
 
 
 
