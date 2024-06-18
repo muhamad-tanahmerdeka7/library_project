@@ -4,6 +4,9 @@
 <head>
     @include('admin.css')
 
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style type="text/css">
         .div_center {
             text-align: center;
@@ -28,7 +31,6 @@
         th {
             background-color: skyblue;
             padding: 10px;
-
         }
 
         tr {
@@ -36,21 +38,19 @@
             padding: 10px;
         }
     </style>
-
 </head>
 
 <body>
     @include('admin.header')
+
     <div class="d-flex align-items-stretch">
         <!-- Sidebar Navigation-->
         @include('admin.sidebar')
         <!-- Sidebar Navigation end-->
 
         <div class="page-content">
-            <div class ="page-header">
-
-
-                <div class ="container-fluid">
+            <div class="page-header">
+                <div class="container-fluid">
                     <div class="div_center">
                         <div>
                             @if (session()->has('message'))
@@ -62,13 +62,11 @@
                             @endif
                         </div>
 
-
-
                         <h1 class="cat_label">Add Category</h1>
 
                         <form action="{{ url('add_category') }}" method="POST">
                             @csrf
-                            <span style="padding-right:15px;">
+                            <span style="padding-right: 15px;">
                                 <label>Category name</label>
                                 <input type="text" name="category" required>
                             </span>
@@ -86,27 +84,39 @@
                                     <tr>
                                         <td>{{ $data->cat_title }}</td>
                                         <td>
-                                            <a class="btn btn-danger" 
-                                            href="{{ url('cat_delete', $data->id) }}">Delete</a>
+                                            <a onclick="confirmation(event)" class="btn btn-danger"
+                                                href="{{ url('cat_delete', $data->id) }}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
-
-
-
                             </table>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
 
-
-
-
             @include('admin.footer')
+
+            <script>
+                function confirmation(ev) {
+                    ev.preventDefault();
+                    var urlToredirect = ev.currentTarget.getAttribute('href');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = urlToredirect;
+                        }
+                    });
+                }
+            </script>
 </body>
 
 </html>
