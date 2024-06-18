@@ -83,7 +83,13 @@
                                 @foreach ($data as $data)
                                     <tr>
                                         <td>{{ $data->cat_title }}</td>
+
+                                        {{-- Delete --}}
                                         <td>
+
+                                            <!-- Tautan Update -->
+                                            <a class="btn btn-info"
+                                                href="{{ url('edit_update', $data->id) }}">Update</a>
                                             <a onclick="confirmation(event)" class="btn btn-danger"
                                                 href="{{ url('cat_delete', $data->id) }}">Delete</a>
                                         </td>

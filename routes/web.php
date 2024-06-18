@@ -40,6 +40,10 @@ Route::get ('/home', [AdminController::class, 'index']);
 Route::get ('/category_page', [AdminController::class, 'category_page']);
 Route::post('/add_category', [AdminController::class, 'add_category']);
 Route::get ('/cat_delete/{id}', [AdminController::class, 'cat_delete']);
+Route::get('/edit_update/{id}', [AdminController::class, 'edit_update']);
+Route::post('/update_category/{id}', [AdminController::class, 'update_category']);
+
+
 
 // Rute logout menggunakan metode POST
 // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
