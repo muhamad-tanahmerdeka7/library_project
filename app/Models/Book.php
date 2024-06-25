@@ -18,4 +18,9 @@ class Book extends Model
         'book_img',
         'auther_img',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

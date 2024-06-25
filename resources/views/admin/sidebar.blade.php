@@ -19,7 +19,7 @@
             <a href="#productSubmenu" aria-expanded="false" data-toggle="collapse"><i class="icon-windows"></i>Books</a>
             <ul id="productSubmenu" class="collapse list-unstyled">
                 <li><a href="{{ url('add_book') }}">Add Books</a></li>
-                <li><a href="#">Page</a></li>
+                <li><a href="{{ url('show_book') }}">Show Book</a></li>
                 <li><a href="#">Page</a></li>
             </ul>
         </li>

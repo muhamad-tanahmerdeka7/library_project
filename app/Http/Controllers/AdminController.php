@@ -105,4 +105,9 @@ public function store_book(Request $request) {
 
         return redirect()->back()->with('message', 'Book Added Successfully');
     }
+    public function show_book() {   
+        $book = Book::all();
+        return view('admin.show_book', compact('book'));
+
+    }
 }

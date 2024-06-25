@@ -44,6 +44,7 @@ Route::get('/edit_update/{id}', [AdminController::class, 'edit_update']);
 Route::post('/update_category/{id}', [AdminController::class, 'update_category']);
 Route::get('/add_book', [AdminController::class, 'add_book']);
 Route::post('/store_book', [AdminController::class, 'store_book']);
+Route::get('/show_book', [AdminController::class, 'show_book']);
 
 
 
