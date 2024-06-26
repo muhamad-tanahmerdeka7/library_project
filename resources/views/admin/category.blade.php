@@ -58,6 +58,8 @@
                                     {{ session()->get('message') }}
                                     <button type="button" class="close" data-dismiss="alert"
                                         aria-hidden="true">x</button>
+
+                                    {{-- {{ session()->get('message') }} --}}
                                 </div>
                             @endif
                         </div>

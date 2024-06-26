@@ -3,6 +3,7 @@
 
 <head>
     @include('admin.css')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style type="text/css">
         .table_center {
@@ -47,6 +48,13 @@
         <div class="page-content">
             <div class="page-header">
                 <div class="container-fluid">
+                    @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            {{-- {{ session()->get('message') }} --}}
+                        </div>
+                    @endif
                     <div>
                         <table class="table_center">
                             <tr>
@@ -57,7 +65,7 @@
                                 <th>Description</th>
                                 <th>Category</th>
                                 <th>Auther Image</th>
-                                <th>Book Image</th>
+                                <th>Delete</th>
                             </tr>
 
                             @foreach ($book as $book)
@@ -75,6 +83,13 @@
                                             width="50"></td>
                                     <td><img class="img_book" src="book/{{ $book->book_img }}" alt="Book Image"
                                             width="50"></td>
+                                    <td>
+                                        <a onclick="confirmation(event)" href="{{ url('book_delete', $book->id) }}"
+                                            class="btn btn-danger"> Delete
+                                        </a>
+                                    </td>
+
+
                                 </tr>
                             @endforeach
 
@@ -86,6 +101,29 @@
                 </div>
             </div>
         </div>
+
+        @include('admin.footer')
+
+        <script>
+            function confirmation(ev) {
+                ev.preventDefault();
+                var urlToredirect = ev.currentTarget.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = urlToredirect;
+                    }
+                });
+            }
+        </script>
 
 </body>
 
