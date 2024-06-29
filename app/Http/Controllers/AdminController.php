@@ -115,4 +115,36 @@ public function store_book(Request $request) {
         $data->delete();
         return redirect()->back()->with('message', 'Book Deleted Successfully');
     }
+    public function edit_book($id) {
+        $data = Book::find($id);
+        $category = Category::all();
+        return view('admin.edit_book', compact('data', 'category'));
+    }
+    public function update_book(Request $request, $id) {
+        $data = Book::find($id);
+        $data->title = $request->title;
+        $data->auther_name = $request->auther_name;
+        $data->price = $request->price;
+        $data->quantity = $request->quantity;
+        $data->description = $request->description;
+        $data->category_id = $request->category;
+
+
+        // 
+        
+        if ($request->hasFile('book_img')) {
+            $book_image_name = time() . '_' . $request->file('book_img')->getClientOriginalName();
+            $request->file('book_img')->move(public_path('book'), $book_image_name);
+            $data->book_img = $book_image_name;
+        }
+
+        if ($request->hasFile('auther_img')) {
+            $auther_image_name = time() . '_' . $request->file('auther_img')->getClientOriginalName();
+            $request->file('auther_img')->move(public_path('auther'), $auther_image_name);
+            $data->auther_img = $auther_image_name;
+        }
+
+        $data->save();
+        return redirect('/show_book')->with('message', 'Book Updated Successfully');
+    }
 }
