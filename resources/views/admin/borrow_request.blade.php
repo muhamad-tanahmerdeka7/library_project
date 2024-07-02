@@ -67,7 +67,7 @@
                                     @if ($data->status == 'returned')
                                         <span style="color:yellow;">{{ $data->status }}</span>
                                     @endif
-                                    @if ($data->status == 'applied')
+                                    @if ($data->status == 'Applied')
                                         <span style="color:white;">{{ $data->status }}</span>
                                     @endif
                                 </td>
