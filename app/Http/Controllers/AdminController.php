@@ -148,4 +148,5 @@ public function store_book(Request $request) {
         $data->save();
         return redirect('/show_book')->with('message', 'Book Updated Successfully');
     }
+   
 }
