@@ -22,7 +22,7 @@
 
         .center {
             margin: auto;
-            width: 50%;
+            width: 70%;
             text-align: center;
             margin-top: 50px;
             border: 1px solid white;

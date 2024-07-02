@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Borrow;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -147,6 +148,13 @@ public function store_book(Request $request) {
 
         $data->save();
         return redirect('/show_book')->with('message', 'Book Updated Successfully');
+    }
+
+    public function borrow_request() 
+    {  
+        $data = Borrow::all();
+
+        return view('admin.borrow_request', compact('data'));
     }
    
 }
