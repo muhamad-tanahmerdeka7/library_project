@@ -11,41 +11,30 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    //
-
     public function index()
     {
-        if(Auth::id()){
+        if (Auth::id()) {
             $user_type = Auth()->user()->usertype;
-            if($user_type == 'admin'){
+            if ($user_type == 'admin') {
                 return view('admin.index');
-            }
-
-            else if ($user_type == 'user') {
+            } else if ($user_type == 'user') {
                 $data = Book::all();
                 return view('home.index', compact('data'));
             }
-            
-            
+        } else {
+            return redirect()->back();
         }
-            else{
-                return redirect()->back();
-            }
-      
     }
 
     public function category_page() {
         $data = Category::all();
         return view('admin.category', compact('data'));
-
     }
+
     public function add_category(Request $request) {
-        // $data = $request->all();
         $data = new Category();
         $data->cat_title = $request->category;
         $data->save();
-        
-       
         return redirect()->back()->with('message', 'Category Added Successfully');
     }
 
@@ -59,20 +48,21 @@ class AdminController extends Controller
         $data = Category::find($id);
         return view('admin.edit_update', compact('data'));
     }
+
     public function update_category(Request $request, $id) {
-    $data = Category::find($id);
-    $data->cat_title = $request->cat_name;
-    $data->save();
-    return redirect('/category_page')->with('message', 'Category Updated Successfully');
-}
-public  function add_book() {
-    $data =  Category::all();
+        $data = Category::find($id);
+        $data->cat_title = $request->cat_name;
+        $data->save();
+        return redirect('/category_page')->with('message', 'Category Updated Successfully');
+    }
 
-    return view('admin.add_book', compact('data'));
-}
+    public function add_book() {
+        $data = Category::all();
+        return view('admin.add_book', compact('data'));
+    }
 
-public function store_book(Request $request) {
-    $request->validate([
+    public function store_book(Request $request) {
+        $request->validate([
             'book_name' => 'required|string',
             'auther_name' => 'required|string',
             'price' => 'required|numeric',
@@ -104,24 +94,26 @@ public function store_book(Request $request) {
         }
 
         $data->save();
-
         return redirect()->back()->with('message', 'Book Added Successfully');
     }
-    public function show_book() {   
+
+    public function show_book() {
         $book = Book::all();
         return view('admin.show_book', compact('book'));
-
     }
+
     public function book_delete($id) {
         $data = Book::find($id);
         $data->delete();
         return redirect()->back()->with('message', 'Book Deleted Successfully');
     }
+
     public function edit_book($id) {
         $data = Book::find($id);
         $category = Category::all();
         return view('admin.edit_book', compact('data', 'category'));
     }
+
     public function update_book(Request $request, $id) {
         $data = Book::find($id);
         $data->title = $request->title;
@@ -131,9 +123,6 @@ public function store_book(Request $request) {
         $data->description = $request->description;
         $data->category_id = $request->category;
 
-
-        // 
-        
         if ($request->hasFile('book_img')) {
             $book_image_name = time() . '_' . $request->file('book_img')->getClientOriginalName();
             $request->file('book_img')->move(public_path('book'), $book_image_name);
@@ -150,11 +139,56 @@ public function store_book(Request $request) {
         return redirect('/show_book')->with('message', 'Book Updated Successfully');
     }
 
-    public function borrow_request() 
-    {  
+    public function borrow_request() {
         $data = Borrow::all();
-
         return view('admin.borrow_request', compact('data'));
     }
-   
+
+    public function approve_book($id) {
+        $data = Borrow::find($id);
+        $status = $data->status;
+
+        if ($status == 'approved') {
+            return redirect()->back();
+        } else {
+            $data->status = 'approved';
+            $data->save();
+
+            $bookid = $data->book_id;
+            $book = Book::find($bookid);
+            $book_qty = $book->quantity - '1'; // Pengurangan quantity sebagai integer
+            $book->quantity = $book_qty;
+            $book->save();
+
+            return redirect()->back();
+        }
+    }
+
+    // Fungsi yang diperbaiki
+    public function return_book($id) {
+        $data = Borrow::find($id);
+        $status = $data->status;
+
+        if ($status == 'returned') {
+            return redirect()->back();
+        } else {
+            $data->status = 'returned';
+            $data->save();
+
+            $bookid = $data->book_id;
+            $book = Book::find($bookid);
+            $book_qty = $book->quantity + '1'; // Penambahan quantity sebagai integer
+            $book->quantity = $book_qty;
+            $book->save();
+
+            return redirect()->back();
+        }
+    }
+
+    public function rejected_book($id) {
+        $data = Borrow::find($id);
+        $data->status = 'rejected';
+        $data->save();
+        return redirect()->back();
+    }
 }

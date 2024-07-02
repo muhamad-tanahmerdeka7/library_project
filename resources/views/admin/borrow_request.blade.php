@@ -45,6 +45,7 @@
                             <th>Quantity</th>
                             <th>Borrow Status</th>
                             <th>Book Image</th>
+                            <th>Change Status</th>
                         </tr>
 
                         @foreach ($data as $data)
@@ -54,11 +55,32 @@
                                 <td>{{ $data->user->phone }}</td>
                                 <td>{{ $data->book->title }}</td>
                                 <td>{{ $data->book->quantity }}</td>
-                                <td>{{ $data->status }}</td>
+                                <td>
+
+                                    @if ($data->status == 'approved')
+                                        <span style="color:skyblue;">{{ $data->status }}</span>
+                                    @endif
+
+                                    @if ($data->status == 'rejected')
+                                        <span style="color: red;">{{ $data->status }}</span>
+                                    @endif
+                                    @if ($data->status == 'returned')
+                                        <span style="color:yellow;">{{ $data->status }}</span>
+                                    @endif
+                                    @if ($data->status == 'applied')
+                                        <span style="color:white;">{{ $data->status }}</span>
+                                    @endif
+                                </td>
 
                                 <td>
-                                    <img style="height: 120 px; width: 80x;" src="book/{{ $data->book->book_img }}"
-                                        alt="">
+                                    <img style="height: 120 px; width: 80x; margin-top: 5px  "
+                                        src="book/{{ $data->book->book_img }}" alt="">
+                                </td>
+
+                                <td>
+                                    <a class="btn btn-warning" href="{{ url('approve_book', $data->id) }}">Approved</a>
+                                    <a class="btn btn-danger"href="{{ url('rejected_book', $data->id) }}">Rejected</a>
+                                    <a class="btn btn-info" href="{{ url('return_book', $data->id) }}">Returned</a>
                                 </td>
 
 
